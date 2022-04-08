@@ -6,12 +6,16 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.EditText
 import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import com.example.seminar_task1.databinding.ActivitySignInBinding
 
 class SignInActivity : AppCompatActivity() {
     private lateinit var binding : ActivitySignInBinding
     private lateinit var etid : EditText
     private lateinit var etpw : EditText
+    private lateinit var getSignUpActivityResult : ActivityResultLauncher<Intent>
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySignInBinding.inflate(layoutInflater)
@@ -34,9 +38,21 @@ class SignInActivity : AppCompatActivity() {
         //회원가입 버튼 클릭시
         binding.btnSignup.setOnClickListener {
             val intent = Intent(this,SignUpActivity::class.java)
-            startActivity(intent)
+            getSignUpActivityResult.launch(intent) //startActivity 대신 사용해서 값 받아올 수 있도록 함
         }
 
-
+        //회원가입 후 ID, PW 가져오기
+        getSignUpActivityResult = registerForActivityResult(
+            ActivityResultContracts.StartActivityForResult()) {
+            result ->
+                //회원가입에서 돌아올 때 결과 값 받아옴
+                if(result.resultCode == RESULT_OK){
+                    var signupId = result.data?.getStringExtra("id")
+                    var signupPw = result.data?.getStringExtra("pw")
+                    etid.setText(signupId)
+                    etpw.setText(signupPw)
+                }
+            }
     }
+
 }
