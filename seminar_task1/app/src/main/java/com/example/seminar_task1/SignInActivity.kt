@@ -26,7 +26,7 @@ class SignInActivity : AppCompatActivity() {
 
         //로그인 버튼 클릭시
         binding.btnLogin.setOnClickListener {
-            if(etid.text.toString().isNotEmpty() && etpw.text.toString().isNotEmpty()){//값이 있는 경우
+            if(etid.text.toString().isNotBlank() && etpw.text.toString().isNotBlank()){//값이 있는 경우
                 Toast.makeText(this,"로그인 성공",Toast.LENGTH_SHORT).show()
                 val intent = Intent(this,HomeActivity::class.java)
                 startActivity(intent)

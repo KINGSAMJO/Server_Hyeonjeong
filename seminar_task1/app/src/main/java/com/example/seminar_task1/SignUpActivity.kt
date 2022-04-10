@@ -23,7 +23,7 @@ class SignUpActivity : AppCompatActivity() {
 
     //회원가입 완료 버튼 클릭시
     private fun signup(){
-        if(binding.etSignupId.text.toString().isNotEmpty() && binding.etSignupName.text.toString().isNotEmpty() && binding.etSignupPw.text.toString().isNotEmpty()){
+        if(binding.etSignupId.text.toString().isNotBlank() && binding.etSignupName.text.toString().isNotBlank() && binding.etSignupPw.text.toString().isNotEmpty()){
             Toast.makeText(this,"회원가입성공", Toast.LENGTH_SHORT).show()
             var signupId : String = binding.etSignupId.text.toString()
             var signupPw : String = binding.etSignupPw.text.toString()
