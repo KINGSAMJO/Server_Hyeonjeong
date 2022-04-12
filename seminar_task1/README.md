@@ -2,6 +2,8 @@
 > 로그인 페이지 만들기
 > (SignInActivity)
 
+<img width="397" alt="1" src="https://user-images.githubusercontent.com/81394850/162618531-506ff87d-1ee9-4193-903f-975cf141c1b0.png">
+
 
 **1. 아이디, 비밀번호 모두 입력 되어있을 경우만 Activity 이동**
 ```kotlin
@@ -21,6 +23,8 @@ binding.btnLogin.setOnClickListener {
 - `Toast` 메시지를 통해 '로그인 성공' 출력하기
 - `Intent` 객체를 통해 HomeActivity로 이동하기
 
+<img width="422" alt="2" src="https://user-images.githubusercontent.com/81394850/162618590-bc3b874a-ca25-4e94-9d09-a59994c30f11.png">
+
 
 **2. 비밀번호 입력 내용 가리기**
 `android:inputType="textPassword"` 를 통해 입력한 비밀번호를 가리도록 설정하기
@@ -36,6 +40,8 @@ binding.btnSignup.setOnClickListener {
   startActivity(intent)
 }
 ```
+<img width="430" alt="3" src="https://user-images.githubusercontent.com/81394850/162618624-f4b0083d-0b17-4f33-9382-b2ec82a444ad.png">
+
 
 `Intent(context, 호출할 액티비티::class.java)` 
 -> 회원가입 Activity 호출하여 이동하기
@@ -62,6 +68,16 @@ override fun finish() {
 
 * ` isNotBlank` 속성을 통해 EditText에 값이 있는 경우만 회원가입 성공하도록 설정
 * `finish()` 함수를 호출하여 현재 엑티비티를 종료하고 Intent하기 전에 있었던 Activity로 이동
+
+> 모두 입력하지 않은 경우
+
+<img width="413" alt="4" src="https://user-images.githubusercontent.com/81394850/162618715-8fd68f0b-1205-4685-8580-493d175bc8b0.png">
+
+> 모두 입력한 경우
+
+<img width="437" alt="5" src="https://user-images.githubusercontent.com/81394850/162618774-cfc97f49-01c9-4fe7-bdc8-e85aced10a25.png">
+
+-> 회원가입 성공
 
 # 필수과제 1-3
 
@@ -122,6 +138,8 @@ if (!isFinishing) {
 * `putExtra`를 통해  key값과 함께 입력한 값을 저장해준다.
 * 값 입력 후 RESULT_OK를 통해 받은 입력 값을 전달하여 사용할 수 있도록 한다.
 
+<img width="437" alt="6" src="https://user-images.githubusercontent.com/81394850/162618897-34dcc36f-e0ed-412e-bd54-e66bcf910cc2.png">
+
 
 # 성장과제 2-2
 
@@ -142,6 +160,11 @@ if (!isFinishing) {
   ```
 * ScrollView는 imageview나 TextView와 같은 View들을 바로 포함할 수 없다. 또한 한개의 뷰만 포함 가능하다. 그래서 layout을 만들고 그 내부에 다른 view들을 포함해야한다.
 * ConstraintLayout을 내부에 만들고 그 안에 다른 뷰들을 포함하여 만든다.
+
+<img width="401" alt="7" src="https://user-images.githubusercontent.com/81394850/162618912-60f04285-3618-44d4-aa8f-624bd592cea1.png">
+<img width="421" alt="8" src="https://user-images.githubusercontent.com/81394850/162618937-bf8c7f7c-6051-4fbf-a367-389f5244c4bf.png">
+
+-> 내용이 많을 경우, 스크롤뷰를 통해 내릴 수 있도록 함
 
 <br>
 
