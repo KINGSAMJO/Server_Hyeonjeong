@@ -7,6 +7,7 @@ import android.util.Log
 import android.widget.Toast
 import com.example.seminar_task1.databinding.ActivitySignUpBinding
 
+
 class SignUpActivity : AppCompatActivity() {
     private lateinit var binding : ActivitySignUpBinding
     override fun onCreate(savedInstanceState: Bundle?) {
