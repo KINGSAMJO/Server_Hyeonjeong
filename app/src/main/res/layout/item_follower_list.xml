@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="10dp">
+
+    <ImageView
+        android:id="@+id/iv_follower_list_profile"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintWidth_percent="0.23"
+        android:background="@drawable/sopt"/>
+    <TextView
+        android:id="@+id/tv_follower_list_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@+id/iv_follower_list_profile"
+        android:text="@string/name"
+        android:textColor="@color/black"
+        android:layout_marginStart="10dp"
+        android:textSize="20sp"
+        app:layout_constraintTop_toTopOf="@id/iv_follower_list_profile" />
+    <TextView
+        android:id="@+id/tv_follower_list_intro"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/mbti"
+        android:textColor="@color/black"
+        android:textSize="15sp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        app:layout_constraintTop_toBottomOf="@id/tv_follower_list_name"
+        app:layout_constraintStart_toStartOf="@+id/tv_follower_list_name"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_follower_list_profile"/>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

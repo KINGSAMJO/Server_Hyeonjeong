@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Server_Hyeonjeong</string>
+    <string name="name">이름 : 박현정</string>
+    <string name="age">나이 : 24</string>
+    <string name="mbti">MBTI : ESFJ</string>
+    <string name="btn_home_follower">Follower</string>
+    <string name="btn_home_repository">Repository</string>
 </resources>
