@@ -2,6 +2,7 @@ package com.example.seminar_task1
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.TextView
 import com.example.seminar_task1.databinding.ActivityHomeBinding
 
 class HomeActivity : AppCompatActivity() {

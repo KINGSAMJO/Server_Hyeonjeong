@@ -1,11 +1,13 @@
 package com.example.seminar_task1
 
+import android.icu.util.TimeUnit.values
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.seminar_task1.databinding.FragmentFollowerBinding
+import java.time.chrono.JapaneseEra.values
 
 class FollowerFragment : Fragment() {
     private var _binding : FragmentFollowerBinding? = null
@@ -21,6 +23,7 @@ class FollowerFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initAdapter()
+        binding.rvFollower.addItemDecoration(ItemDecoration(10,"#FFBB86FC"))
     }
 
     private fun initAdapter(){
@@ -28,12 +31,12 @@ class FollowerFragment : Fragment() {
         binding.rvFollower.adapter = followerAdapter
         followerAdapter.followerList.addAll(
             listOf(
-                FollowerData("이강민", "안드로이드 파트장"),
-                FollowerData("박현정","KINGSAMJO SERVER"),
-                FollowerData("한승현","KINGSAMJO IOS"),
-                FollowerData("황연진", "KINGSAMJO WEB"),
-                FollowerData("이영주", "KINGSAMJO DESIGN"),
-                FollowerData("김효림", "안드로이드 루피"),
+                FollowerData("이강민", "안팟장님"),
+                FollowerData("박현정","SAMJO SERVER"),
+                FollowerData("한승현","KING IOS"),
+                FollowerData("황연진", "SAMJO WEB"),
+                FollowerData("이영주", "KING DESIGN"),
+                FollowerData("김효림", "안드 루피"),
                 FollowerData("문다빈", "안미녀"),
                 FollowerData("최유리", "유림이"),
                 FollowerData("문명주", "알고리즘신"),
@@ -44,6 +47,7 @@ class FollowerFragment : Fragment() {
         followerAdapter.notifyDataSetChanged()
 
     }
+
 
     override fun onDestroyView() {
         _binding = null

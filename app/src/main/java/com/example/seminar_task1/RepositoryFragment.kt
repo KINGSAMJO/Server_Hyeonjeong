@@ -20,6 +20,7 @@ class RepositoryFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initAdapter()
+        binding.rvRepository.addItemDecoration(ItemDecoration(5,"#FFBB86FC"))
     }
 
     private fun initAdapter(){
@@ -27,13 +28,19 @@ class RepositoryFragment : Fragment() {
         binding.rvRepository.adapter = repositoryAdapter
         repositoryAdapter.repoList.addAll(
             listOf(
-                RepositoryData("Android Assignment Repository", "안드로이드 파트 과제"),
+                RepositoryData("Android Assignment Repository", "안드로이드 파트 과제가 아주 많이 있습니다~~~"),
                 RepositoryData("SOPT Repository","세미나 자료"),
                 RepositoryData("EWHA CYBER Repository","웹보안 강의자료"),
                 RepositoryData("ㅋㅌ스터디 Repository", "코딩테스트 강의자료"),
                 RepositoryData("아키텍처 스터디 Repository", "MVVM 아키텍처 자료"),
                 RepositoryData("git 스터디 Repository", "깃 강의 자료"),
             )
+        )
+    }
+
+    private fun initRecyclerView(){
+        binding.rvRepository.addItemDecoration(
+            ItemDecoration(5, "#FFBB86FC")
         )
     }
 

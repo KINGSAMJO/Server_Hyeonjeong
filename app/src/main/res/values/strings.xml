@@ -5,4 +5,6 @@
     <string name="mbti">MBTI : ESFJ</string>
     <string name="btn_home_follower">Follower</string>
     <string name="btn_home_repository">Repository</string>
+    <string name="tv_detail_name">NAME : </string>
+    <string name="tv_detail_desc">DESCRIPTION : </string>
 </resources>

@@ -23,6 +23,7 @@
         android:textColor="@color/black"
         android:layout_marginStart="10dp"
         android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/tv_follower_list_intro"
         app:layout_constraintTop_toTopOf="@id/iv_follower_list_profile" />
     <TextView
         android:id="@+id/tv_follower_list_intro"
