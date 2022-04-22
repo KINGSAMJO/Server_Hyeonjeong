@@ -20,7 +20,7 @@ class RepositoryFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initAdapter()
-        binding.rvRepository.addItemDecoration(ItemDecoration(5,"#FFBB86FC"))
+        binding.rvRepository.addItemDecoration(ItemDecoration(50,"#FFBB86FC", 10))
     }
 
     private fun initAdapter(){
@@ -38,11 +38,6 @@ class RepositoryFragment : Fragment() {
         )
     }
 
-    private fun initRecyclerView(){
-        binding.rvRepository.addItemDecoration(
-            ItemDecoration(5, "#FFBB86FC")
-        )
-    }
 
     //바인딩 객체 참조 해제
     override fun onDestroyView() {

@@ -23,7 +23,7 @@ class FollowerFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initAdapter()
-        binding.rvFollower.addItemDecoration(ItemDecoration(10,"#FFBB86FC"))
+        binding.rvFollower.addItemDecoration(ItemDecoration(10,"#FFBB86FC",10))
     }
 
     private fun initAdapter(){
