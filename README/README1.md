@@ -173,3 +173,5 @@ if (!isFinishing) {
 `app:layout_constraintDimensionRatio="1:1"` -> 가로, 세로 비율을 1:1로 설정하기 
  
 `app:layout_constraintWidth_percent="0.4"` -> Width에 40% 크기로 image 크기를 설정한다. 이때 가로, 세로 비율이 같으므로 Length 또한 같은 크기로 설정된다.
+
+![]("https://user-images.githubusercontent.com/81394850/162618937-bf8c7f7c-6051-4fbf-a367-389f5244c4bf.png")
