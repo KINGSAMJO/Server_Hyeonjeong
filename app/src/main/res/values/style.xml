@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+   <!--custom font-family 적용-->
+    <style name="AppStyle" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:textViewStyle">@style/noto_sans_textView</item>
+        <item name="android:buttonStyle">@style/noto_sans_button</item>
+        <item name="android:editTextStyle">@style/noto_sans_editText</item>
+    </style>
+</resources>

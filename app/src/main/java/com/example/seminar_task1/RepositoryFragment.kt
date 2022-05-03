@@ -36,6 +36,7 @@ class RepositoryFragment : Fragment() {
                 RepositoryData("git 스터디 Repository", "깃 강의 자료"),
             )
         )
+        repositoryAdapter.notifyDataSetChanged()
     }
 
 
