@@ -1,11 +1,12 @@
-package com.example.seminar_task1
+package com.example.seminar_task1.adapter
 
 import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.RecyclerView
+import com.example.seminar_task1.DetailActivity
+import com.example.seminar_task1.model.RepositoryData
 import com.example.seminar_task1.databinding.ItemRepositoryListBinding
 
 
@@ -13,7 +14,7 @@ class RepositoryAdapter:RecyclerView.Adapter<RepositoryAdapter.RepositoryViewHol
     val repoList = mutableListOf<RepositoryData>()
     private lateinit var mContext : Context
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RepositoryAdapter.RepositoryViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RepositoryViewHolder {
         mContext = parent.context
         val binding = ItemRepositoryListBinding.inflate(
             LayoutInflater.from(parent.context),
@@ -23,7 +24,7 @@ class RepositoryAdapter:RecyclerView.Adapter<RepositoryAdapter.RepositoryViewHol
         return RepositoryViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: RepositoryAdapter.RepositoryViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: RepositoryViewHolder, position: Int) {
         holder.onBind(repoList[position])
 
         holder.itemView.setOnClickListener {

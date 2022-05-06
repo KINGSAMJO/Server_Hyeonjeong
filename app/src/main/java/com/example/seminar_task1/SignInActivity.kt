@@ -22,7 +22,6 @@ class SignInActivity : AppCompatActivity() {
         binding = ActivitySignInBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        Log.d("onCreate","start")
         etid = binding.etId
         etpw = binding.etPw
 
