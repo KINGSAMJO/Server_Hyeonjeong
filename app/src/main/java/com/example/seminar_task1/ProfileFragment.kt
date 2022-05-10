@@ -34,12 +34,12 @@ class ProfileFragment : Fragment() {
         binding.btnFollower.setOnClickListener{
             binding.btnFollower.isSelected = true
             binding.btnRepository.isSelected = false
-            childFragmentManager.beginTransaction().replace(R.id.fcv_profile,repositoryFragment).commit()
+            childFragmentManager.beginTransaction().replace(R.id.fcv_profile,followerFragment).commit()
         }
         binding.btnRepository.setOnClickListener {
             binding.btnFollower.isSelected = false
             binding.btnRepository.isSelected = true
-            childFragmentManager.beginTransaction().replace(R.id.fcv_profile,followerFragment).commit()
+            childFragmentManager.beginTransaction().replace(R.id.fcv_profile,repositoryFragment).commit()
         }
 
     }

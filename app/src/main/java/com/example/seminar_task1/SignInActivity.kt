@@ -9,6 +9,11 @@ import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import com.example.seminar_task1.databinding.ActivitySignInBinding
+import com.example.seminar_task1.model.RequestSignIn
+import com.example.seminar_task1.model.ResponseSignIn
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 
 class SignInActivity : AppCompatActivity() {
@@ -22,6 +27,7 @@ class SignInActivity : AppCompatActivity() {
         binding = ActivitySignInBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        initEvent()
         etid = binding.etId
         etpw = binding.etPw
 
@@ -63,6 +69,41 @@ class SignInActivity : AppCompatActivity() {
             val intent = Intent(this,SignUpActivity::class.java)
             getSignUpActivityResult.launch(intent) //startActivity 대신 사용해서 값 받아올 수 있도록 함
         }
+
+    }
+
+    private fun initEvent(){
+        binding.btnLogin.setOnClickListener {
+            loginNetwork()
+        }
+    }
+
+    private fun loginNetwork(){
+        val requestSignIn = RequestSignIn(
+            id= binding.etId.text.toString(),
+            password = binding.etPw.text.toString()
+        )
+        val call : Call<ResponseSignIn> = ServiceCreator.soptService.postLogin(requestSignIn)
+
+        call.enqueue(object : Callback<ResponseSignIn> {
+            override fun onResponse(
+                call : Call<ResponseSignIn>,
+                response: Response<ResponseSignIn>
+            ){
+                if(response.isSuccessful){
+                    val data = response.body()?.data
+                    Toast.makeText(this@SignInActivity, "${data?.email}님 반갑습니다.", Toast.LENGTH_SHORT).show()
+                    startActivity(Intent(this@SignInActivity, HomeActivity::class.java))
+
+                }else Toast.makeText(this@SignInActivity,"로그인에 실패했습니다.",Toast.LENGTH_SHORT).show()
+            }
+
+            override fun onFailure(call: Call<ResponseSignIn>, t: Throwable) {
+                Log.e("NetworkTEst,","error:$t")
+            }
+
+
+        })
 
     }
 
