@@ -27,7 +27,6 @@ class SignInActivity : AppCompatActivity() {
         binding = ActivitySignInBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        initEvent()
         etid = binding.etId
         etpw = binding.etPw
 
@@ -37,8 +36,6 @@ class SignInActivity : AppCompatActivity() {
         //회원가입 버튼 클릭시
         signUp()
 
-        //회원가입 후 ID, PW 가져오기
-        signUp()
         getSignUpActivityResult = registerForActivityResult(
             ActivityResultContracts.StartActivityForResult()) {
             result ->
@@ -55,12 +52,34 @@ class SignInActivity : AppCompatActivity() {
     private fun signIn(){
         binding.btnLogin.setOnClickListener {
             if(etid.text.toString().isNotBlank() && etpw.text.toString().isNotBlank()){//값이 있는 경우
-                Toast.makeText(this,"로그인 성공",Toast.LENGTH_SHORT).show()
-                val intent = Intent(this,HomeActivity::class.java)
-                startActivity(intent)
+                val requestSignIn = RequestSignIn(
+                    id= binding.etId.text.toString(),
+                    password = binding.etPw.text.toString()
+                )
+                val call : Call<ResponseSignIn> = ServiceCreator.soptService.postLogin(requestSignIn)
+
+                call.enqueue(object : Callback<ResponseSignIn> {
+                    override fun onResponse(
+                        call : Call<ResponseSignIn>,
+                        response: Response<ResponseSignIn>
+                    ){
+                        if(response.isSuccessful){
+                            val data = response.body()?.data
+                            Toast.makeText(this@SignInActivity, "${data?.email}님 반갑습니다.", Toast.LENGTH_SHORT).show()
+                            startActivity(Intent(this@SignInActivity, HomeActivity::class.java))
+
+                        }else Toast.makeText(this@SignInActivity,"로그인에 실패했습니다.",Toast.LENGTH_SHORT).show()
+                    }
+
+                    override fun onFailure(call: Call<ResponseSignIn>, t: Throwable) {
+                        Log.e("NetworkTest,","error:$t")
+                    }
+                })
             }else {
                 Toast.makeText(this,"아이디/비밀번호를 확인해주세요",Toast.LENGTH_SHORT).show()
             }
+
+
         }
     }
 
@@ -69,41 +88,6 @@ class SignInActivity : AppCompatActivity() {
             val intent = Intent(this,SignUpActivity::class.java)
             getSignUpActivityResult.launch(intent) //startActivity 대신 사용해서 값 받아올 수 있도록 함
         }
-
-    }
-
-    private fun initEvent(){
-        binding.btnLogin.setOnClickListener {
-            loginNetwork()
-        }
-    }
-
-    private fun loginNetwork(){
-        val requestSignIn = RequestSignIn(
-            id= binding.etId.text.toString(),
-            password = binding.etPw.text.toString()
-        )
-        val call : Call<ResponseSignIn> = ServiceCreator.soptService.postLogin(requestSignIn)
-
-        call.enqueue(object : Callback<ResponseSignIn> {
-            override fun onResponse(
-                call : Call<ResponseSignIn>,
-                response: Response<ResponseSignIn>
-            ){
-                if(response.isSuccessful){
-                    val data = response.body()?.data
-                    Toast.makeText(this@SignInActivity, "${data?.email}님 반갑습니다.", Toast.LENGTH_SHORT).show()
-                    startActivity(Intent(this@SignInActivity, HomeActivity::class.java))
-
-                }else Toast.makeText(this@SignInActivity,"로그인에 실패했습니다.",Toast.LENGTH_SHORT).show()
-            }
-
-            override fun onFailure(call: Call<ResponseSignIn>, t: Throwable) {
-                Log.e("NetworkTEst,","error:$t")
-            }
-
-
-        })
 
     }
 
