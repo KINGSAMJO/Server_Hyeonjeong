@@ -2,31 +2,58 @@ package com.example.seminar_task1
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.TextView
+import androidx.viewpager2.widget.ViewPager2
+import com.example.seminar_task1.adapter.HomeViewPagerAdapter
 import com.example.seminar_task1.databinding.ActivityHomeBinding
 
 class HomeActivity : AppCompatActivity() {
     private lateinit var binding : ActivityHomeBinding
+    private lateinit var homeViewPagerAdapter: HomeViewPagerAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        initTransaction()
+        initAdapter()
+        initBottomNavi()
     }
 
-    private fun initTransaction(){
-        val fragment1 = FollowerFragment()
-        val fragment2 = RepositoryFragment()
+    private fun initAdapter(){
+        val fragmentList = listOf(ProfileFragment(), HomeFragment(), CameraFragment())
+        homeViewPagerAdapter = HomeViewPagerAdapter(this)
+        homeViewPagerAdapter.fragments.addAll(fragmentList)
 
-        supportFragmentManager.beginTransaction().add(R.id.fcv_home,fragment1).commit()
-        binding.btnFollower.setOnClickListener {
-            supportFragmentManager.beginTransaction().replace(R.id.fcv_home,fragment1).commit()
-        }
-        binding.btnRepository.setOnClickListener {
-            supportFragmentManager.beginTransaction().replace(R.id.fcv_home,fragment2).commit()
+        binding.vpHome.adapter = homeViewPagerAdapter
+    }
+
+    private fun initBottomNavi(){
+        binding.vpHome.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback(){
+            override fun onPageSelected(position: Int) {
+                binding.bnvHome.menu.getItem(position).isChecked = true
+            }
+        })
+        binding.bnvHome.setOnItemSelectedListener {
+            when(it.itemId){
+                R.id.menu_profile -> {
+                    binding.vpHome.currentItem = FIRST_FRAGMENT
+                    return@setOnItemSelectedListener true
+                }
+                R.id.menu_home -> {
+                    binding.vpHome.currentItem = SECOND_FRAGMENT
+                    return@setOnItemSelectedListener true
+                }
+                else -> {
+                    binding.vpHome.currentItem = THIRD_FRAGMENT
+                    return@setOnItemSelectedListener true
+                }
+            }
         }
     }
 
+    companion object{
+        const val FIRST_FRAGMENT = 0
+        const val SECOND_FRAGMENT = 1
+        const val THIRD_FRAGMENT = 2
+    }
 
 }

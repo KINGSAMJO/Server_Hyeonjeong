@@ -1,13 +1,14 @@
 package com.example.seminar_task1
 
-import android.icu.util.TimeUnit.values
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.example.seminar_task1.adapter.FollowerAdapter
 import com.example.seminar_task1.databinding.FragmentFollowerBinding
-import java.time.chrono.JapaneseEra.values
+import com.example.seminar_task1.model.FollowerData
+import com.example.seminar_task1.util.ItemDecoration
 
 class FollowerFragment : Fragment() {
     private var _binding : FragmentFollowerBinding? = null

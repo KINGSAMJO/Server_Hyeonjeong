@@ -5,7 +5,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.example.seminar_task1.adapter.RepositoryAdapter
 import com.example.seminar_task1.databinding.FragmentRepositoryBinding
+import com.example.seminar_task1.model.RepositoryData
+import com.example.seminar_task1.util.ItemDecoration
 
 class RepositoryFragment : Fragment() {
     private var _binding : FragmentRepositoryBinding? = null
@@ -36,6 +39,7 @@ class RepositoryFragment : Fragment() {
                 RepositoryData("git 스터디 Repository", "깃 강의 자료"),
             )
         )
+        repositoryAdapter.notifyDataSetChanged()
     }
 
 
