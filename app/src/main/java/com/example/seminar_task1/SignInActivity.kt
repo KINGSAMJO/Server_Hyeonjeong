@@ -11,6 +11,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import com.example.seminar_task1.databinding.ActivitySignInBinding
 import com.example.seminar_task1.model.RequestSignIn
 import com.example.seminar_task1.model.ResponseSignIn
+import com.example.seminar_task1.util.enqueueUtil
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -58,23 +59,18 @@ class SignInActivity : AppCompatActivity() {
                 )
                 val call : Call<ResponseSignIn> = ServiceCreator.soptService.postLogin(requestSignIn)
 
-                call.enqueue(object : Callback<ResponseSignIn> {
-                    override fun onResponse(
-                        call : Call<ResponseSignIn>,
-                        response: Response<ResponseSignIn>
-                    ){
-                        if(response.isSuccessful){
-                            val data = response.body()?.data
-                            Toast.makeText(this@SignInActivity, "${data?.email}님 반갑습니다.", Toast.LENGTH_SHORT).show()
-                            startActivity(Intent(this@SignInActivity, HomeActivity::class.java))
-
-                        }else Toast.makeText(this@SignInActivity,"로그인에 실패했습니다.",Toast.LENGTH_SHORT).show()
+                call.enqueueUtil(
+                    onSuccess = {
+                        Toast.makeText(this@SignInActivity, "${it?.data.email}님 반갑습니다.", Toast.LENGTH_SHORT).show()
+                        startActivity(Intent(this@SignInActivity, HomeActivity::class.java))
+                    },
+                    onError = {
+                        when(it){
+                            404 -> Toast.makeText(this, "요청값을 처리할 수 없습니다",Toast.LENGTH_SHORT).show()
+                            500 -> Toast.makeText(this, "internal server error",Toast.LENGTH_SHORT).show()
+                        }
                     }
-
-                    override fun onFailure(call: Call<ResponseSignIn>, t: Throwable) {
-                        Log.e("NetworkTest,","error:$t")
-                    }
-                })
+                )
             }else {
                 Toast.makeText(this,"아이디/비밀번호를 확인해주세요",Toast.LENGTH_SHORT).show()
             }
@@ -82,6 +78,7 @@ class SignInActivity : AppCompatActivity() {
 
         }
     }
+
 
     private fun signUp(){
         binding.btnSignup.setOnClickListener {
