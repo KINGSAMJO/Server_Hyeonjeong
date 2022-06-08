@@ -2,6 +2,7 @@ package com.example.seminar_task1.util
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.util.Log
 
 object SOPTSharedPreferences {
     private const val STORAGE_KEY = "USER_AUTO"
@@ -12,11 +13,11 @@ object SOPTSharedPreferences {
         preferences = context.getSharedPreferences(STORAGE_KEY, Context.MODE_PRIVATE)
     }
 
-    fun getAutoLogin(context: Context): Boolean {
+    fun getAutoLogin(): Boolean {
         return preferences.getBoolean(AUTO_LOGIN, false)
     }
 
-    fun setAutoLogin(context: Context, value : Boolean){
+    fun setAutoLogin(value : Boolean){
         preferences.edit()
             .putBoolean(AUTO_LOGIN, value)
             .apply()

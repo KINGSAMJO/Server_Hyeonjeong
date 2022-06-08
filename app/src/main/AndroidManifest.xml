@@ -10,8 +10,7 @@
         android:required="false" />
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
 
     <application
         android:allowBackup="true"
@@ -21,23 +20,27 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Seminar_task1"
         android:usesCleartextTraffic="true">
+
         <activity
-            android:name=".SettingActivity"
-            android:exported="false" />
-        <activity
-            android:name=".NaviActivity"
-            android:exported="false" />
-        <activity android:name=".DetailActivity" />
-        <activity android:name=".SignUpActivity" />
-        <activity android:name=".HomeActivity" />
-        <activity
-            android:name=".SignInActivity"
+            android:name=".OnBoardingActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".SettingActivity"
+            android:exported="false" />
+
+        <activity android:name=".DetailActivity" />
+        <activity android:name=".SignUpActivity" />
+        <activity android:name=".HomeActivity" />
+        <activity
+            android:name=".SignInActivity"
+            android:exported="false">
+
         </activity>
     </application>
 

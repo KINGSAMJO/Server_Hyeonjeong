@@ -19,7 +19,7 @@ class SettingActivity : AppCompatActivity() {
 
     private fun isAutoLogOut(){
         binding.clAutoLogout.setOnClickListener{
-            SOPTSharedPreferences.setAutoLogin(this,false)
+            SOPTSharedPreferences.setAutoLogin(false)
             SOPTSharedPreferences.setLogout(this)
             Toast.makeText(this,"자동로그인 되었습니다",Toast.LENGTH_SHORT).show()
             startActivity(Intent(this@SettingActivity, SignInActivity::class.java))

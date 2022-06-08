@@ -55,13 +55,13 @@ class SignInActivity : AppCompatActivity() {
     private fun initClickEvent(){
         binding.btnCheckbox.setOnClickListener {
             binding.btnCheckbox.isSelected = !binding.btnCheckbox.isSelected
-            SOPTSharedPreferences.setAutoLogin(this, binding.btnCheckbox.isSelected)
+            SOPTSharedPreferences.setAutoLogin(binding.btnCheckbox.isSelected)
         }
     }
 
     //자동로그인
     private fun isAutoLogin(){
-        if(SOPTSharedPreferences.getAutoLogin(this)){
+        if(SOPTSharedPreferences.getAutoLogin()){
             Toast.makeText(this,"자동로그인 되었습니다",Toast.LENGTH_SHORT).show()
             startActivity(Intent(this@SignInActivity, HomeActivity::class.java))
             finish()
