@@ -1,5 +1,6 @@
 package com.example.seminar_task1
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -24,6 +25,7 @@ class ProfileFragment : Fragment() {
 
 
         initTransaction()
+        isSetting()
     }
 
     private fun initTransaction(){
@@ -42,6 +44,13 @@ class ProfileFragment : Fragment() {
             childFragmentManager.beginTransaction().replace(R.id.fcv_profile,repositoryFragment).commit()
         }
 
+    }
+
+    private fun isSetting(){
+        binding.btnSetting.setOnClickListener{
+            val intent = Intent(requireContext(), SettingActivity::class.java)
+            startActivity(intent)
+        }
     }
 
 }

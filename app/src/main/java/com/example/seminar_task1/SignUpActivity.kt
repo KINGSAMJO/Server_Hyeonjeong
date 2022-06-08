@@ -43,7 +43,7 @@ class SignUpActivity : AppCompatActivity() {
                     onSuccess = {
                         Toast.makeText(
                             this@SignUpActivity,
-                            "${it?.message}!!",
+                            "${it.message}!!",
                             Toast.LENGTH_SHORT
                         ).show()
                         //로그인 페이지로 이동할 때 입력 값을 보내도록 하는 코드
@@ -60,6 +60,8 @@ class SignUpActivity : AppCompatActivity() {
                     onError = {
                         when (it) {
                             404 -> Toast.makeText(this, "요청값을 처리할 수 없습니다", Toast.LENGTH_SHORT)
+                                .show()
+                            404 -> Toast.makeText(this, "존재하는 회원입니다ㅔ", Toast.LENGTH_SHORT)
                                 .show()
                             500 -> Toast.makeText(this, "internal server error", Toast.LENGTH_SHORT)
                                 .show()
