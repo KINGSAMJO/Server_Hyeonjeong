@@ -65,7 +65,7 @@ class SignInActivity : AppCompatActivity() {
                     db.signInDao().findIsLogin("UserLogin")
                 }
 
-            if(!isAuto.isAutoLogin){
+            if(isAuto===null || !isAuto.isAutoLogin){
                 db.signInDao().insert(LoginData("UserLogin", false))
             }
         }
