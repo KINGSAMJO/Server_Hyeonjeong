@@ -10,6 +10,7 @@ data class LoginData(
     val id: String,
     @ColumnInfo(name = "isAutoLogin")
     val isAutoLogin: Boolean,
-){
-    @PrimaryKey(autoGenerate = true) var baseId: Int = 0
+) {
+    @PrimaryKey(autoGenerate = true)
+    var baseId: Int = 0
 }

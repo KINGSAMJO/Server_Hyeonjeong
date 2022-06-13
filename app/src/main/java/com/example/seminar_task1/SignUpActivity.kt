@@ -61,7 +61,7 @@ class SignUpActivity : AppCompatActivity() {
                         when (it) {
                             404 -> Toast.makeText(this, "요청값을 처리할 수 없습니다", Toast.LENGTH_SHORT)
                                 .show()
-                            404 -> Toast.makeText(this, "존재하는 회원입니다ㅔ", Toast.LENGTH_SHORT)
+                            404 -> Toast.makeText(this, "존재하는 회원입니다", Toast.LENGTH_SHORT)
                                 .show()
                             500 -> Toast.makeText(this, "internal server error", Toast.LENGTH_SHORT)
                                 .show()

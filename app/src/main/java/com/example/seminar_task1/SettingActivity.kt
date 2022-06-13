@@ -13,7 +13,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class SettingActivity : AppCompatActivity() {
-    private lateinit var binding : ActivitySettingBinding
+    private lateinit var binding: ActivitySettingBinding
     private lateinit var db: SignInDatabase
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,14 +24,14 @@ class SettingActivity : AppCompatActivity() {
         setContentView(binding.root)
     }
 
-    private fun isAutoLogOut(){
-        binding.btnRight.setOnClickListener{
+    private fun isAutoLogOut() {
+        binding.btnRight.setOnClickListener {
             //SOPTSharedPreferences.setAutoLogin(false)
             //SOPTSharedPreferences.setLogout(this)
             CoroutineScope(Dispatchers.IO).launch {
                 db.signInDao().deleteIsLogin("UserLogin")
             }
-            Toast.makeText(this,"자동로그인 해제 되었습니다",Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "자동로그인 해제 되었습니다", Toast.LENGTH_SHORT).show()
             startActivity(Intent(this@SettingActivity, SignInActivity::class.java))
             finish()
         }

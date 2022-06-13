@@ -17,13 +17,13 @@ object SOPTSharedPreferences {
         return preferences.getBoolean(AUTO_LOGIN, false)
     }
 
-    fun setAutoLogin(value : Boolean){
+    fun setAutoLogin(value: Boolean) {
         preferences.edit()
             .putBoolean(AUTO_LOGIN, value)
             .apply()
     }
 
-    fun setLogout(context: Context){
+    fun setLogout(context: Context) {
         preferences = context.getSharedPreferences(STORAGE_KEY, Context.MODE_PRIVATE)
         preferences.edit()
             .remove(AUTO_LOGIN)

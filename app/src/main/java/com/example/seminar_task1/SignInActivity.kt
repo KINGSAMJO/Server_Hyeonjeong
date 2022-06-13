@@ -59,7 +59,7 @@ class SignInActivity : AppCompatActivity() {
     //자동로그인 db INSERT
     private fun initLogin() {
 
-        CoroutineScope(Dispatchers.IO).launch {
+        CoroutineScope(Dispatchers.IO).async {
             val isAuto =
                 withContext(CoroutineScope(Dispatchers.IO).coroutineContext) {
                     db.signInDao().findIsLogin("UserLogin")
@@ -76,7 +76,7 @@ class SignInActivity : AppCompatActivity() {
     private fun initClickEvent() {
         binding.btnCheckbox.setOnClickListener {
             binding.btnCheckbox.isSelected = !binding.btnCheckbox.isSelected
-            CoroutineScope(Dispatchers.IO).launch {
+            CoroutineScope(Dispatchers.IO).async {
                 db.signInDao().update("UserLogin", binding.btnCheckbox.isSelected)
             }
             //SOPTSharedPreferences.setAutoLogin(binding.btnCheckbox.isSelected)
@@ -85,7 +85,7 @@ class SignInActivity : AppCompatActivity() {
 
     //자동로그인
     private fun isAutoLogin() {
-        CoroutineScope(Dispatchers.Main).launch {
+        CoroutineScope(Dispatchers.Main).async {
             val isAuto =
                 withContext(CoroutineScope(Dispatchers.IO).coroutineContext) {
                     db.signInDao().findIsLogin("UserLogin")
