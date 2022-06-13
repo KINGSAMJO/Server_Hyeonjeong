@@ -1,5 +1,6 @@
 package com.example.seminar_task1
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -28,7 +29,14 @@ class FollowerFragment : Fragment() {
     }
 
     private fun initAdapter(){
-        followerAdapter = FollowerAdapter()
+        followerAdapter = FollowerAdapter{ // itemclick 람다함수에서 사용할 인자 값을 전달해줌(원래는 어뎁터만 연결해줬음)
+            val intent = Intent(requireContext(), DetailActivity::class.java)
+            intent.apply {//puExtra 묶어서 전달
+                intent.putExtra("name", it.followerName)
+                intent.putExtra("desc", it.followerIntro)
+            }
+            startActivity(intent)
+        }
         binding.rvFollower.adapter = followerAdapter
         followerAdapter.followerList.addAll(
             listOf(
