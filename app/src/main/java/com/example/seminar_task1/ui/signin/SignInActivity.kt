@@ -5,7 +5,10 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.viewModels
+import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
+import com.example.seminar_task1.R
 import com.example.seminar_task1.data.database.SignInDatabase
 import com.example.seminar_task1.data.model.LoginData
 import com.example.seminar_task1.data.model.request.RequestSignIn
@@ -13,7 +16,9 @@ import com.example.seminar_task1.data.model.response.ResponseSignIn
 import com.example.seminar_task1.data.service.ServiceCreator
 import com.example.seminar_task1.databinding.ActivitySignInBinding
 import com.example.seminar_task1.ui.HomeActivity
+import com.example.seminar_task1.ui.base.BaseActivity
 import com.example.seminar_task1.ui.signup.SignUpActivity
+import com.example.seminar_task1.ui.viewmodel.SignInViewModel
 import com.example.seminar_task1.util.enqueueUtil
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -22,22 +27,20 @@ import kotlinx.coroutines.withContext
 import retrofit2.Call
 
 
-class SignInActivity : AppCompatActivity() {
-    private lateinit var binding: ActivitySignInBinding
+class SignInActivity : BaseActivity<ActivitySignInBinding>(R.layout.activity_sign_in) {
     private lateinit var getSignUpActivityResult: ActivityResultLauncher<Intent>
     private lateinit var db: SignInDatabase
+    private val signInViewModel by viewModels<SignInViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivitySignInBinding.inflate(layoutInflater)
-
         db = SignInDatabase.getInstance(applicationContext)!!
-
+        binding.signIn = signInViewModel
         //SOPTSharedPreferences.init(this)
         initLogin()
         initClickEvent()
         isAutoLogin()
-
+        initObserver()
 
         //로그인 버튼 클릭시
         signIn()
@@ -56,7 +59,36 @@ class SignInActivity : AppCompatActivity() {
                 binding.etPw.setText(signupPw)
             }
         }
-        setContentView(binding.root)
+    }
+
+    private fun initObserver() {
+        signInViewModel.userId.observe(this) {
+
+        }
+
+        signInViewModel.userPassword.observe(this) {
+
+        }
+
+        signInViewModel.state.observe(this) {
+            when (it) {
+                true ->{
+                    startActivity(Intent(this@SignInActivity, HomeActivity::class.java))
+                    Toast.makeText(this@SignInActivity, "Hi 반갑습니다.", Toast.LENGTH_SHORT).show()
+                    finish()
+                }
+                false ->{
+                    Toast.makeText(this@SignInActivity, "로그인 실패", Toast.LENGTH_SHORT).show()
+                }
+
+            }
+        }
+
+        signInViewModel.isEmpty.observe(this){
+            if(it){
+                Toast.makeText(this@SignInActivity,  "아이디 및 비밀번호를 입력해주세요",Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 
     //자동로그인 db INSERT
@@ -68,7 +100,7 @@ class SignInActivity : AppCompatActivity() {
                     db.signInDao().findIsLogin("UserLogin")
                 }
 
-            if(isAuto===null || !isAuto.isAutoLogin){
+            if (isAuto === null || !isAuto.isAutoLogin) {
                 db.signInDao().insert(LoginData("UserLogin", false))
             }
         }
@@ -111,38 +143,7 @@ class SignInActivity : AppCompatActivity() {
 
     private fun signIn() {
         binding.btnLogin.setOnClickListener {
-            if (binding.etId.text.toString().isNotBlank() && binding.etPw.text.toString()
-                    .isNotBlank()
-            ) {//값이 있는 경우
-                val requestSignIn = RequestSignIn(
-                    id = binding.etId.text.toString(),
-                    password = binding.etPw.text.toString()
-                )
-                val call: Call<ResponseSignIn> = ServiceCreator.soptService.postLogin(requestSignIn)
-
-                call.enqueueUtil(
-                    onSuccess = {
-                        Toast.makeText(
-                            this@SignInActivity,
-                            "${it.data.email}님 반갑습니다.",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                        startActivity(Intent(this@SignInActivity, HomeActivity::class.java))
-                    },
-                    onError = {
-                        when (it) {
-                            404 -> Toast.makeText(this, "요청값을 처리할 수 없습니다", Toast.LENGTH_SHORT)
-                                .show()
-                            500 -> Toast.makeText(this, "internal server error", Toast.LENGTH_SHORT)
-                                .show()
-                        }
-                    }
-                )
-            } else {
-                Toast.makeText(this, "아이디/비밀번호를 확인해주세요", Toast.LENGTH_SHORT).show()
-            }
-
-
+            signInViewModel.signIn()
         }
     }
 
