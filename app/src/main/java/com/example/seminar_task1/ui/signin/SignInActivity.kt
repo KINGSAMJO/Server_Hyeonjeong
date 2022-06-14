@@ -62,14 +62,6 @@ class SignInActivity : BaseActivity<ActivitySignInBinding>(R.layout.activity_sig
     }
 
     private fun initObserver() {
-        signInViewModel.userId.observe(this) {
-
-        }
-
-        signInViewModel.userPassword.observe(this) {
-
-        }
-
         signInViewModel.state.observe(this) {
             when (it) {
                 true ->{

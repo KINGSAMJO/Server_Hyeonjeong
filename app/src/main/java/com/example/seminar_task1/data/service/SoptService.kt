@@ -16,8 +16,8 @@ interface SoptService {
     ) : BaseResponse<ResponseSignIn>
 
     @POST("auth/signup")
-    fun postSignUp(
+    suspend fun postSignUp(
         @Body body: RequestSignUp
-    ) : Call<ResponseSignUp>
+    ) : BaseResponse<ResponseSignUp>
 
 }
