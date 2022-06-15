@@ -31,6 +31,7 @@ class ItemDecoration(private val offsets : Int, private val colors : String, pri
             val divLeft = child.left + param.leftMargin
             val divRight = divLeft - 10
             if(i != parent.childCount ){
+//                c.drawRect(child.left.toFloat() , divTop.toFloat(), child.right.toFloat() ,divBottom.toFloat() , paint)
                 c.drawRoundRect((child.left).toFloat(), (child.top).toFloat(), (child.right).toFloat(), (child.bottom).toFloat(), rounds.toFloat(), rounds.toFloat(), paint)
             }
         }

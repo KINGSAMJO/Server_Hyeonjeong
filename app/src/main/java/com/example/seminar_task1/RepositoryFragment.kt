@@ -27,9 +27,8 @@ class RepositoryFragment : Fragment() {
     }
 
     private fun initAdapter(){
-        repositoryAdapter = RepositoryAdapter(context)
+        repositoryAdapter = RepositoryAdapter()
         binding.rvRepository.adapter = repositoryAdapter
-
         repositoryAdapter.repoList.addAll(
             listOf(
                 RepositoryData("Android Assignment Repository", "안드로이드 파트 과제가 아주 많이 있습니다~~~"),
