@@ -8,14 +8,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.seminar_task1.DetailActivity
 import com.example.seminar_task1.model.RepositoryData
 import com.example.seminar_task1.databinding.ItemRepositoryListBinding
+import com.example.seminar_task1.model.FollowerData
 
 
-class RepositoryAdapter:RecyclerView.Adapter<RepositoryAdapter.RepositoryViewHolder>(){
+class RepositoryAdapter(private val mContext: Context?) : RecyclerView.Adapter<RepositoryAdapter.RepositoryViewHolder>() {
     val repoList = mutableListOf<RepositoryData>()
-    private lateinit var mContext : Context
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RepositoryViewHolder {
-        mContext = parent.context
         val binding = ItemRepositoryListBinding.inflate(
             LayoutInflater.from(parent.context),
             parent,
@@ -31,7 +30,7 @@ class RepositoryAdapter:RecyclerView.Adapter<RepositoryAdapter.RepositoryViewHol
             val intent = Intent(mContext, DetailActivity::class.java)
             intent.putExtra("name", repoList[position].repoName)
             intent.putExtra("desc", repoList[position].repoIntro)
-            mContext.startActivity(intent)
+            mContext?.startActivity(intent)
         }
     }
 
@@ -39,10 +38,11 @@ class RepositoryAdapter:RecyclerView.Adapter<RepositoryAdapter.RepositoryViewHol
         return repoList.size
     }
 
-    class RepositoryViewHolder(private val binding: ItemRepositoryListBinding) : RecyclerView.ViewHolder(
-        binding.root
-    ) {
-        fun onBind(data: RepositoryData){
+    class RepositoryViewHolder(private val binding: ItemRepositoryListBinding) :
+        RecyclerView.ViewHolder(
+            binding.root
+        ) {
+        fun onBind(data: RepositoryData) {
             binding.tvRepoListName.text = data.repoName
             binding.tvRepoListIntro.text = data.repoIntro
         }
