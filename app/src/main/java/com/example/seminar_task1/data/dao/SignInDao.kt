@@ -13,7 +13,7 @@ interface SignInDao {
     suspend fun delete(isLogin: LoginData)
 
     @Query("DELETE FROM LoginData WHERE id = :user")
-    suspend fun deleteIsLogin(user: String)
+    fun deleteIsLogin(user: String)
 
     @Query("SELECT * FROM LoginData")
     suspend fun getAll(): List<LoginData>

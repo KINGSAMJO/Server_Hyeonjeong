@@ -32,6 +32,9 @@ class SignInViewModel : ViewModel() {
     private var _isEmpty = MutableLiveData<Boolean>()
     val isEmpty : LiveData<Boolean> get() = _isEmpty
 
+    private var _isAutoLogin = MutableLiveData<Boolean>()
+    val isAutoLogin : LiveData<Boolean> get() = _isAutoLogin
+
     fun signIn() {
         if (userId.value.toString().isNotBlank() && userPassword.toString().isNotBlank()
         ) {//값이 있는 경우
@@ -45,7 +48,8 @@ class SignInViewModel : ViewModel() {
                 }.onSuccess {
                     withContext(Dispatchers.Main) {
                         _state.value = true
-                        Log.d("login", it.toString())
+                        _isAutoLogin.value = true
+                        Log.d("login???????????", it.toString())
                     }
 
                 }.onFailure {
@@ -66,4 +70,5 @@ class SignInViewModel : ViewModel() {
             _isEmpty.value = true
         }
     }
+
 }

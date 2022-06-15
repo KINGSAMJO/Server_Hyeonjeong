@@ -64,23 +64,24 @@ class SignInActivity : BaseActivity<ActivitySignInBinding>(R.layout.activity_sig
     private fun initObserver() {
         signInViewModel.state.observe(this) {
             when (it) {
-                true ->{
+                true -> {
                     startActivity(Intent(this@SignInActivity, HomeActivity::class.java))
                     Toast.makeText(this@SignInActivity, "Hi 반갑습니다.", Toast.LENGTH_SHORT).show()
                     finish()
                 }
-                false ->{
+                false -> {
                     Toast.makeText(this@SignInActivity, "로그인 실패", Toast.LENGTH_SHORT).show()
                 }
 
             }
         }
 
-        signInViewModel.isEmpty.observe(this){
-            if(it){
-                Toast.makeText(this@SignInActivity,  "아이디 및 비밀번호를 입력해주세요",Toast.LENGTH_SHORT).show()
+        signInViewModel.isEmpty.observe(this) {
+            if (it) {
+                Toast.makeText(this@SignInActivity, "아이디 및 비밀번호를 입력해주세요", Toast.LENGTH_SHORT).show()
             }
         }
+
     }
 
     //자동로그인 db INSERT
@@ -103,10 +104,14 @@ class SignInActivity : BaseActivity<ActivitySignInBinding>(R.layout.activity_sig
     private fun initClickEvent() {
         binding.btnCheckbox.setOnClickListener {
             binding.btnCheckbox.isSelected = !binding.btnCheckbox.isSelected
-            CoroutineScope(Dispatchers.IO).launch {
-                db.signInDao().update("UserLogin", binding.btnCheckbox.isSelected)
+            signInViewModel.isAutoLogin.observe(this) {
+                if (it) {
+                    CoroutineScope(Dispatchers.IO).launch {
+                        db.signInDao().update("UserLogin", binding.btnCheckbox.isSelected)
+                    }
+                }
+                //SOPTSharedPreferences.setAutoLogin(binding.btnCheckbox.isSelected)
             }
-            //SOPTSharedPreferences.setAutoLogin(binding.btnCheckbox.isSelected)
         }
     }
 
@@ -118,7 +123,7 @@ class SignInActivity : BaseActivity<ActivitySignInBinding>(R.layout.activity_sig
                     db.signInDao().findIsLogin("UserLogin")
                 }
             if (isAuto.isAutoLogin) {
-                Toast.makeText(applicationContext, "자동로그인 되었습니다", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@SignInActivity, "자동로그인 되었습니다", Toast.LENGTH_SHORT).show()
                 startActivity(Intent(this@SignInActivity, HomeActivity::class.java))
                 finish()
             }
