@@ -20,10 +20,15 @@ class HomeActivity : AppCompatActivity() {
 
         initAdapter()
         initBottomNavi()
+        getUserImformation()
     }
 
     private fun initAdapter(){
-        val fragmentList = listOf(ProfileFragment(), HomeFragment(), CameraFragment())
+        val name = intent.getStringExtra("userName").toString()
+        val login = intent.getStringExtra("userLogin").toString()
+        val image = intent.getStringExtra("userImage").toString()
+
+        val fragmentList = listOf(ProfileFragment(name, login, image), HomeFragment(), CameraFragment())
         homeViewPagerAdapter = HomeViewPagerAdapter(this)
         homeViewPagerAdapter.fragments.addAll(fragmentList)
 
@@ -52,6 +57,10 @@ class HomeActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+
+    private fun getUserImformation(){
+
     }
 
     companion object{

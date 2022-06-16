@@ -1,33 +1,28 @@
 package com.example.seminar_task1.ui.viewmodel
 
-import android.app.ProgressDialog.show
-import android.content.Intent
 import android.util.Log
-import android.widget.Toast
-import androidx.core.content.ContextCompat.startActivity
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.seminar_task1.data.model.request.RequestSignIn
-import com.example.seminar_task1.data.model.response.ResponseSignIn
-import com.example.seminar_task1.data.service.ServiceCreator
-import com.example.seminar_task1.data.service.SoptService
-import com.example.seminar_task1.ui.HomeActivity
-import com.example.seminar_task1.util.enqueueUtil
+import com.example.seminar_task1.data.model.response.ResponseGithubUserName
+import com.example.seminar_task1.data.service.GithubService
+import com.example.seminar_task1.data.service.GithubServiceCreator
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import retrofit2.Call
 import retrofit2.HttpException
 
 class SignInViewModel : ViewModel() {
-    private val signInService: SoptService = ServiceCreator.soptService
+    private val githubService: GithubService = GithubServiceCreator.githubService
     var userId = MutableLiveData<String>()
     var userPassword = MutableLiveData<String>()
 
     private var _state = MutableLiveData<Boolean>()
     val state: LiveData<Boolean> get() = _state
+
+    private var _userData = MutableLiveData<ResponseGithubUserName>()
+    val userData: LiveData<ResponseGithubUserName> get() = _userData
 
     private var _isEmpty = MutableLiveData<Boolean>()
     val isEmpty : LiveData<Boolean> get() = _isEmpty
@@ -44,10 +39,12 @@ class SignInViewModel : ViewModel() {
 
             viewModelScope.launch(Dispatchers.IO) {
                 kotlin.runCatching {
-                    signInService.postLogin(RequestSignIn(id, password))
+                    githubService.getUserName(userId.value.toString())
                 }.onSuccess {
                     withContext(Dispatchers.Main) {
+                        responseData(it)
                         _state.value = true
+                        _userData.value = it
                         _isAutoLogin.value = true
                         Log.d("login???????????", it.toString())
                     }
@@ -71,4 +68,7 @@ class SignInViewModel : ViewModel() {
         }
     }
 
+    private fun responseData(userData : ResponseGithubUserName) {
+        val id = userData
+    }
 }

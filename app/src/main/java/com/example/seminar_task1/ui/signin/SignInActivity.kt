@@ -8,6 +8,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import com.example.seminar_task1.R
 import com.example.seminar_task1.data.database.SignInDatabase
 import com.example.seminar_task1.data.model.LoginData
@@ -65,9 +66,17 @@ class SignInActivity : BaseActivity<ActivitySignInBinding>(R.layout.activity_sig
         signInViewModel.state.observe(this) {
             when (it) {
                 true -> {
-                    startActivity(Intent(this@SignInActivity, HomeActivity::class.java))
-                    Toast.makeText(this@SignInActivity, "Hi 반갑습니다.", Toast.LENGTH_SHORT).show()
-                    finish()
+                    signInViewModel.userData.observe(this) {
+                        val intent = Intent(this@SignInActivity, HomeActivity::class.java).apply {
+                            putExtra("userName", it.name)
+                            putExtra("userLogin", it.login)
+                            putExtra("userImage",it.avatar_url)
+                        }
+                        startActivity(intent)
+                        Toast.makeText(this@SignInActivity, "${it.name}님 반갑습니다.", Toast.LENGTH_SHORT).show()
+                        finish()
+                    }
+
                 }
                 false -> {
                     Toast.makeText(this@SignInActivity, "로그인 실패", Toast.LENGTH_SHORT).show()
@@ -88,10 +97,9 @@ class SignInActivity : BaseActivity<ActivitySignInBinding>(R.layout.activity_sig
     private fun initLogin() {
 
         CoroutineScope(Dispatchers.IO).launch {
-            val isAuto =
-                withContext(CoroutineScope(Dispatchers.IO).coroutineContext) {
-                    db.signInDao().findIsLogin("UserLogin")
-                }
+            val isAuto = withContext(CoroutineScope(Dispatchers.IO).coroutineContext) {
+                db.signInDao().findIsLogin("UserLogin")
+            }
 
             if (isAuto === null || !isAuto.isAutoLogin) {
                 db.signInDao().insert(LoginData("UserLogin", false))
@@ -118,10 +126,9 @@ class SignInActivity : BaseActivity<ActivitySignInBinding>(R.layout.activity_sig
     //자동로그인
     private fun isAutoLogin() {
         CoroutineScope(Dispatchers.Main).launch {
-            val isAuto =
-                withContext(CoroutineScope(Dispatchers.IO).coroutineContext) {
-                    db.signInDao().findIsLogin("UserLogin")
-                }
+            val isAuto = withContext(CoroutineScope(Dispatchers.IO).coroutineContext) {
+                db.signInDao().findIsLogin("UserLogin")
+            }
             if (isAuto.isAutoLogin) {
                 Toast.makeText(this@SignInActivity, "자동로그인 되었습니다", Toast.LENGTH_SHORT).show()
                 startActivity(Intent(this@SignInActivity, HomeActivity::class.java))

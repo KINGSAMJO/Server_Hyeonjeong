@@ -1,6 +1,6 @@
 package com.example.seminar_task1.data.model.response
 
-data class ResponseGithubUserId(
+data class ResponseGithubUserName(
     val avatar_url: String,
     val bio: String,
     val blog: String,
