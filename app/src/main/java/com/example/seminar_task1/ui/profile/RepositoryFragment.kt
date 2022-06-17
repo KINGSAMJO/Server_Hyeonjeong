@@ -34,7 +34,7 @@ class RepositoryFragment(private val userLogin: String) :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initAdapter()
-        binding.rvRepository.addItemDecoration(ItemDecoration(50, "#FFBB86FC", 10))
+        binding.rvRepository.addItemDecoration(ItemDecoration(10, "#FFBB86FC", 10))
     }
 
     private fun initAdapter() {
