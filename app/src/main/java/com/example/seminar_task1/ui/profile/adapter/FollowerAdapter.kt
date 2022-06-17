@@ -17,26 +17,14 @@ class FollowerAdapter(private val itemClick: (ResponseGithubFollowersItem) -> (U
     RecyclerView.Adapter<FollowerAdapter.FollowerViewHolder>() {
     //생성자에 putExtra로 전달한 값 받음
     val followerList = mutableListOf<ResponseGithubFollowersItem>()
-    private var homeActivity: HomeActivity? = null
-    private lateinit var mContext: Context
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FollowerViewHolder {
-        mContext = parent.context
-        homeActivity = HomeActivity()
         val binding = ItemFollowerListBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return FollowerViewHolder(binding, itemClick) //viewholder 생성할 때 itemCLick 전달
     }
 
     override fun onBindViewHolder(holder: FollowerViewHolder, position: Int) {
         holder.onBind(followerList[position])
-
-        /*holder.itemView.setOnClickListener {
-            val intent = Intent(mContext, DetailActivity::class.java)
-            intent.putExtra("name", followerList[position].followerName)
-            intent.putExtra("desc", followerList[position].followerIntro)
-            mContext.startActivity(intent)
-        }*/
-
     }
 
     override fun getItemCount(): Int {

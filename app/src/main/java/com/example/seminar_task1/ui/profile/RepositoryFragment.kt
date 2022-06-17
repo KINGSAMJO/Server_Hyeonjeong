@@ -1,45 +1,61 @@
 package com.example.seminar_task1.ui.profile
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
+import com.example.seminar_task1.R
 import com.example.seminar_task1.databinding.FragmentRepositoryBinding
 import com.example.seminar_task1.data.model.RepositoryData
+import com.example.seminar_task1.ui.base.BaseFragment
+import com.example.seminar_task1.ui.detail.DetailActivity
 import com.example.seminar_task1.ui.profile.adapter.RepositoryAdapter
+import com.example.seminar_task1.ui.viewmodel.RepositoryViewModel
 import com.example.seminar_task1.util.ItemDecoration
 
-class RepositoryFragment : Fragment() {
-    private var _binding : FragmentRepositoryBinding? = null
-    private val binding get() = _binding ?: error("Binding이 초기화 되지 않았습니다.")
-    private lateinit var repositoryAdapter : RepositoryAdapter
+class RepositoryFragment(private val userLogin: String) :
+    BaseFragment<FragmentRepositoryBinding>(R.layout.fragment_repository) {
+    private val repositoryViewModel by viewModels<RepositoryViewModel>()
+    private lateinit var repositoryAdapter: RepositoryAdapter
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        _binding = FragmentRepositoryBinding.inflate(layoutInflater, container, false) //container, false는 무슨 의미인가
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        super.onCreateView(inflater, container, savedInstanceState)
+        binding.repositoryViewModel = repositoryViewModel
         return binding.root //정확히 어디를 가리키는 걸까?
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initAdapter()
-        binding.rvRepository.addItemDecoration(ItemDecoration(50,"#FFBB86FC", 10))
+        binding.rvRepository.addItemDecoration(ItemDecoration(50, "#FFBB86FC", 10))
     }
 
-    private fun initAdapter(){
-        repositoryAdapter = RepositoryAdapter(context)
+    private fun initAdapter() {
+        repositoryViewModel.repositoryNetwork(userLogin)
+
+        repositoryAdapter = RepositoryAdapter {
+            val intent = Intent(requireContext(), DetailActivity::class.java)
+            intent.apply {
+                intent.putExtra("name", it.name)
+                intent.putExtra("description", it.description)
+            }
+            startActivity(intent)
+        }
         binding.rvRepository.adapter = repositoryAdapter
 
-        repositoryAdapter.repoList.addAll(
-            listOf(
-                RepositoryData("Android Assignment Repository", "안드로이드 파트 과제가 아주 많이 있습니다~~~"),
-                RepositoryData("SOPT Repository","세미나 자료"),
-                RepositoryData("EWHA CYBER Repository","웹보안 강의자료"),
-                RepositoryData("ㅋㅌ스터디 Repository", "코딩테스트 강의자료"),
-                RepositoryData("아키텍처 스터디 Repository", "MVVM 아키텍처 자료"),
-                RepositoryData("git 스터디 Repository", "깃 강의 자료"),
-            )
-        )
+        repositoryViewModel.repositoryData.observe(viewLifecycleOwner) {
+            val repositories = it
+            for (i in repositories) {
+                repositoryAdapter.repoList.add(i)
+            }
+        }
         repositoryAdapter.notifyDataSetChanged()
     }
 

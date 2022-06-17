@@ -47,7 +47,7 @@ class ProfileFragment(
 
     private fun initTransaction() {
         val followerFragment = FollowerFragment(userLogin)
-        val repositoryFragment = RepositoryFragment()
+        val repositoryFragment = RepositoryFragment(userLogin)
 
         binding.btnFollower.isSelected = true
         childFragmentManager.beginTransaction().add(R.id.fcv_profile, followerFragment).commit()
