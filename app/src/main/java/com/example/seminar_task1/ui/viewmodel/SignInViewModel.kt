@@ -42,7 +42,7 @@ class SignInViewModel : ViewModel() {
                     githubService.getUserName(userId.value.toString())
                 }.onSuccess {
                     withContext(Dispatchers.Main) {
-                        responseData(it)
+
                         _state.value = true
                         _userData.value = it
                         _isAutoLogin.value = true
@@ -68,7 +68,4 @@ class SignInViewModel : ViewModel() {
         }
     }
 
-    private fun responseData(userData : ResponseGithubUserName) {
-        val id = userData
-    }
 }
