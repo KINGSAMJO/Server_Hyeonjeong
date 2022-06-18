@@ -3,6 +3,8 @@ package com.example.seminar_task1.ui.profile.adapter
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.seminar_task1.data.model.FollowerData
 import com.example.seminar_task1.data.model.response.ResponseGithubFollowersItem
@@ -14,12 +16,13 @@ import com.example.seminar_task1.databinding.ItemFollowerListBinding
 // -> onCreatViewholder에서 생성자에 있는 인자를 뷰홀더 생성하면서 넘긴
 // -> FollowerViewHolder에서 현재 위치인 binding.root에 클릭이벤트 발생시 fragment에서 받은 함수 실행됨
 class FollowerAdapter(private val itemClick: (ResponseGithubFollowersItem) -> (Unit)) :
-    RecyclerView.Adapter<FollowerAdapter.FollowerViewHolder>() {
+    ListAdapter<ResponseGithubFollowersItem, FollowerAdapter.FollowerViewHolder>(FollowerDiffUtil) {
     //생성자에 putExtra로 전달한 값 받음
     val followerList = mutableListOf<ResponseGithubFollowersItem>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FollowerViewHolder {
-        val binding = ItemFollowerListBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding =
+            ItemFollowerListBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return FollowerViewHolder(binding, itemClick) //viewholder 생성할 때 itemCLick 전달
     }
 
@@ -44,5 +47,15 @@ class FollowerAdapter(private val itemClick: (ResponseGithubFollowersItem) -> (U
 
         }
 
+    }
+}
+object FollowerDiffUtil : DiffUtil.ItemCallback<ResponseGithubFollowersItem>() {
+
+    override fun areItemsTheSame(oldItem: ResponseGithubFollowersItem, newItem: ResponseGithubFollowersItem): Boolean {
+        return oldItem.id == newItem.id
+    }
+
+    override fun areContentsTheSame(oldItem: ResponseGithubFollowersItem, newItem: ResponseGithubFollowersItem): Boolean {
+        return oldItem == newItem
     }
 }
