@@ -49,12 +49,13 @@ class FollowerFragment(private val userLogin: String) :
         binding.rvFollower.adapter = followerAdapter
 
         followerViewModel.followerData.observe(viewLifecycleOwner) {
+            followerAdapter.submitList(it)
             val followers = it
             for (i in followers) {
                 followerAdapter.followerList.add(i)
             }
         }
-        followerAdapter.notifyDataSetChanged()
+        //followerAdapter.notifyDataSetChanged()
 
     }
 
