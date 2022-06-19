@@ -31,6 +31,8 @@
             android:layout_height="wrap_content"
             app:layout_constraintStart_toEndOf="@+id/iv_follower_list_profile"
             android:text="@{followerItem.login}"
+            android:ellipsize="end"
+            android:maxLines="1"
             android:textColor="@color/black"
             android:layout_marginStart="10dp"
             android:textSize="20sp"
