@@ -55,7 +55,6 @@ class FollowerFragment(private val userLogin: String) :
                 followerAdapter.followerList.add(i)
             }
         }
-        //followerAdapter.notifyDataSetChanged()
 
     }
 

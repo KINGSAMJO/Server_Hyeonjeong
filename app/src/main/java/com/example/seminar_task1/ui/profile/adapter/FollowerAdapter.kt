@@ -40,7 +40,6 @@ class FollowerAdapter(private val itemClick: (ResponseGithubFollowersItem) -> (U
     ) : RecyclerView.ViewHolder(binding.root) {
         fun onBind(data: ResponseGithubFollowersItem) {
             binding.followerItem = data
-
             binding.root.setOnClickListener {  //호출시 itemclick 람다함수실행함
                 itemClick(data)
             }

@@ -3,15 +3,18 @@ package com.example.seminar_task1.ui.profile.adapter
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.seminar_task1.data.model.RepositoryData
+import com.example.seminar_task1.data.model.response.ResponseGithubFollowersItem
 import com.example.seminar_task1.data.model.response.ResponseGithubRepositoryItem
 import com.example.seminar_task1.databinding.ItemRepositoryListBinding
 import com.example.seminar_task1.ui.detail.DetailActivity
 
 
 class RepositoryAdapter(private val itemClick: (ResponseGithubRepositoryItem) -> (Unit)) :
-    RecyclerView.Adapter<RepositoryAdapter.RepositoryViewHolder>() {
+   ListAdapter<ResponseGithubRepositoryItem, RepositoryAdapter.RepositoryViewHolder>(RepositoryDiffUtil) {
     val repoList = mutableListOf<ResponseGithubRepositoryItem>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RepositoryViewHolder {
@@ -44,5 +47,15 @@ class RepositoryAdapter(private val itemClick: (ResponseGithubRepositoryItem) ->
         }
 
 
+    }
+}
+object RepositoryDiffUtil : DiffUtil.ItemCallback<ResponseGithubRepositoryItem>() {
+
+    override fun areItemsTheSame(oldItem: ResponseGithubRepositoryItem, newItem: ResponseGithubRepositoryItem): Boolean {
+        return oldItem.id == newItem.id
+    }
+
+    override fun areContentsTheSame(oldItem: ResponseGithubRepositoryItem, newItem: ResponseGithubRepositoryItem): Boolean {
+        return oldItem == newItem
     }
 }

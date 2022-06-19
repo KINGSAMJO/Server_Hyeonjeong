@@ -51,12 +51,12 @@ class RepositoryFragment(private val userLogin: String) :
         binding.rvRepository.adapter = repositoryAdapter
 
         repositoryViewModel.repositoryData.observe(viewLifecycleOwner) {
+            repositoryAdapter.submitList(it)
             val repositories = it
             for (i in repositories) {
                 repositoryAdapter.repoList.add(i)
             }
         }
-        repositoryAdapter.notifyDataSetChanged()
     }
 
 
