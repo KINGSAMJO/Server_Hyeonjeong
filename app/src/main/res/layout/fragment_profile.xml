@@ -1,114 +1,113 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:padding="10dp"
-    tools:context=".ProfileFragment">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <data>
+
+    </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/cl_profile"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="30dp"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_height="match_parent"
+        android:padding="10dp"
+        tools:context=".ui.profile.ProfileFragment">
 
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/iv_home_image"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:src="@drawable/womans"
-            app:civ_border_color="@color/sopt_main_purple"
-            app:civ_border_width="1dp"
-            app:layout_constraintDimensionRatio="1:1"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.501"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintWidth_percent="0.3" />
 
-        <TextView
-            android:id="@+id/iv_home_name"
-            android:layout_width="wrap_content"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_profile"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/name"
-            android:textSize="20dp"
-            android:textColor="@color/black"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="20dp"
-            app:layout_constraintTop_toBottomOf="@+id/iv_home_image"/>
-        <TextView
-            android:id="@+id/iv_home_age"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/age"
-            android:textSize="20dp"
-            android:textColor="@color/black"
-            android:layout_marginTop="10dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/iv_home_name"/>
-        <TextView
-            android:id="@+id/iv_home_mbti"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/mbti"
-            android:textSize="20dp"
-            android:layout_marginTop="10dp"
-            android:textColor="@color/black"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/iv_home_age" />
+            android:layout_marginBottom="30dp"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/iv_home_image"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:src="@drawable/womans"
+                app:civ_border_color="@color/sopt_main_purple"
+                app:civ_border_width="1dp"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.501"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintWidth_percent="0.3" />
+
+            <TextView
+                android:id="@+id/iv_home_login"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/names"
+                android:textSize="20sp"
+                android:textColor="@color/black"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginTop="20dp"
+                app:layout_constraintTop_toBottomOf="@+id/iv_home_image" />
+
+            <TextView
+                android:id="@+id/iv_home_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/login"
+                android:textSize="20sp"
+                android:textColor="@color/black"
+                android:layout_marginTop="10dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/iv_home_login" />
+
+            <Button
+                android:id="@+id/btn_setting"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintWidth_percent="0.08"
+                android:backgroundTint="#AEAEAE"
+                android:background="@drawable/ic_outline_settings_24"
+                app:layout_constraintEnd_toEndOf="@+id/cl_profile"
+                app:layout_constraintTop_toTopOf="@+id/cl_profile" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
         <Button
-            android:id="@+id/btn_setting"
+            android:id="@+id/btn_follower"
             android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="@string/btn_home_follower"
+            android:textSize="15sp"
+            android:layout_marginHorizontal="10dp"
+            app:layout_constraintTop_toBottomOf="@+id/cl_profile"
+            app:layout_constraintEnd_toStartOf="@+id/btn_repository"
+            android:background="@drawable/selector_btn"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <Button
+            android:id="@+id/btn_repository"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginHorizontal="10dp"
+            android:textSize="15sp"
+            android:text="@string/btn_home_repository"
+            android:background="@drawable/selector_btn"
+            app:layout_constraintTop_toBottomOf="@+id/cl_profile"
+            app:layout_constraintStart_toEndOf="@+id/btn_follower"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/fcv_profile"
+            android:layout_width="match_parent"
             android:layout_height="0dp"
-            app:layout_constraintDimensionRatio="1:1"
-            app:layout_constraintWidth_percent="0.08"
-            android:backgroundTint="#AEAEAE"
-            android:background="@drawable/ic_outline_settings_24"
-            app:layout_constraintEnd_toEndOf="@+id/cl_profile"
-            app:layout_constraintTop_toTopOf="@+id/cl_profile"/>
+            android:layout_marginTop="15dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.842"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btn_repository"
+            app:layout_constraintVertical_bias="0.0" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <Button
-        android:id="@+id/btn_follower"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:text="@string/btn_home_follower"
-        android:textSize="15sp"
-        android:layout_marginHorizontal="10dp"
-        app:layout_constraintTop_toBottomOf="@+id/cl_profile"
-        app:layout_constraintEnd_toStartOf="@+id/btn_repository"
-        android:background="@drawable/selector_btn"
-        app:layout_constraintStart_toStartOf="parent"/>
-    <Button
-        android:id="@+id/btn_repository"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_marginHorizontal="10dp"
-        android:textSize="15sp"
-        android:text="@string/btn_home_repository"
-        android:background="@drawable/selector_btn"
-        app:layout_constraintTop_toBottomOf="@+id/cl_profile"
-        app:layout_constraintStart_toEndOf="@+id/btn_follower"
-        app:layout_constraintEnd_toEndOf="parent"/>
-
-    <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/fcv_profile"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginTop="15dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.842"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_repository"
-        app:layout_constraintVertical_bias="0.0" />
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

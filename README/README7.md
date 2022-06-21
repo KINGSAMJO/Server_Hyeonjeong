@@ -170,3 +170,183 @@ binding.btnNext.setOnClickListener {
 <img width="200" alt="image" src="https://user-images.githubusercontent.com/81394850/172749173-7b901c6b-6cf7-4e22-b754-790150e992db.png">
 
 -> 로그인 화면 
+
+
+# 도전 과제
+> Room을 사용하여 자동로그인 로직 만들기
+
+### 1. DAO 객체 만들기
+
+```kotlin
+@Dao
+
+interface SignInDao {
+@Insert
+suspend fun insert(isLogin: LoginData)
+
+@Delete
+suspend fun delete(isLogin: LoginData)
+
+@Query("DELETE FROM LoginData WHERE id = :user")
+suspend fun deleteIsLogin(user: String)
+
+@Query("SELECT * FROM LoginData")
+suspend fun getAll(): List<LoginData>
+
+@Query("SELECT * FROM LoginData WHERE id = :user")
+suspend fun findIsLogin(user: String): LoginData
+
+@Query("UPDATE LoginData SET isAutoLogin=:isLogin WHERE id = :user")
+suspend fun update(user: String, isLogin: Boolean)
+}
+```
+1. Insert : isLogin으로 받은 값을 삽입해준다.
+2. Delete : isLogin으로 받은 값을 찾아서 삭제해준다.
+3. deleteIsLogin : 현재 받아온 user가 id와 같은 경우 그 데이터를 삭제해준다.
+4. getAll : 전체 데이터를 리스트 형식으로 불러와준다.
+5. findIsLogin : 해당하는 아이디를 선택해준다.
+6. update : 해당하는 아이디를 찾고 그 값을 업데이트 하고 싶은 값으로 세팅해준다.
+
+코루틴을 사용하여 DB 처리시 IO 영역에서 처리할 수 있도록 설정하였다.
+
+### 2. SignInDataBase 생성
+```kotlin
+@Database(entities = [LoginData::class], version = 5)  
+abstract class SignInDatabase : RoomDatabase() {  
+  abstract fun signInDao(): SignInDao  
+  
+  companion object {  
+  private var instance: SignInDatabase? = null  
+  
+ fun getInstance(context: Context): SignInDatabase? {  
+  if (instance == null) {  
+	  synchronized(SignInDatabase::class) {  
+		  instance = Room.databaseBuilder(  
+			  context.applicationContext, SignInDatabase::class.java,  
+              "signIn-database" //db가 생성될 떄 사용될 이름  
+  )  
+			  .addMigrations(MIGRATION_3_4)  
+			  .fallbackToDestructiveMigration()  
+			  .build()  
+		  }  
+		 }  
+		  return instance  
+	  }  
+  }  
+  
+}  
+val MIGRATION_3_4 = object : Migration(3, 4) {  
+  override fun migrate(database: SupportSQLiteDatabase) {  
+ }
+}
+ ```
+
+-> 위에 SignInDao를 사용하여 데이터베이스를 처리해준다.
+* MIGRATION을 설정하지 않으면 오류가 발생하여 선언해서 추가해두었다.
+
+### 자동로그인 하기 !
+
+> SignInActivity.kt
+```kotlin
+private fun initLogin() {
+CoroutineScope(Dispatchers.IO).launch {
+
+		val isAuto =
+
+			withContext(CoroutineScope(Dispatchers.IO).coroutineContext) {
+
+			db.signInDao().findIsLogin("UserLogin")
+
+}
+		if(isAuto===null){
+
+			db.signInDao().insert(LoginData("UserLogin", false))
+		}
+	}	
+}
+```
+*  자동로그인 버튼 클릭전 초기화 작업을 진행한다.
+* 우선 findIsLogin을 사용하여 UserLgoin가 id인 데이터를 찾아준다.
+* 초기화 안된 경우 null일 것이고, UserLogin 이라는 아이디와 로그인 상태는  false인 데이터를 insert해준다.
+
+> 클릭된경우
+```kotlin
+private fun initClickEvent() {
+
+binding.btnCheckbox.setOnClickListener {
+		binding.btnCheckbox.isSelected = !binding.btnCheckbox.isSelected
+		CoroutineScope(Dispatchers.IO).launch {
+			db.signInDao().update("UserLogin", binding.btnCheckbox.isSelected)
+		}
+	}
+}
+```
+
+* 자동로그인 checkbox가 클릭된 경우 현재 selected 상태를 반대로 바꾼다.
+* CoroutineScope - 백그라운드 영역에서 DB를 다루어줘야한다.
+* 현재 UserLogin 아이디가 초기화 때 생성이 되어있을 것이고, 현재 isSelected 형태로 update해준다.
+
+> 자동로그인
+```kotlin
+	private fun isAutoLogin() {
+
+	CoroutineScope(Dispatchers.Main).launch {
+		val isAuto =
+			withContext(CoroutineScope(Dispatchers.IO).coroutineContext) {
+				db.signInDao().findIsLogin("UserLogin")
+	}
+	if (isAuto.isAutoLogin) {
+		Toast.makeText(applicationContext, "자동로그인 되었습니다", Toast.LENGTH_SHORT).show()
+		startActivity(Intent(this@SignInActivity, HomeActivity::class.java))
+		finish()
+	}
+   }
+}
+```
+* UI 그리기 위해 Main thread에서 작업을 진행한다.
+* DB를 불러오기 위한 작업은 IO thread에서 진행하며 withContext를 사용하여 실행한다.
+* 현재 UserLgoin에 대한 isAutoLgoin 상태가 true인 경우 자동로그인이 성공하며 현재 로그인 화면이 finish된다.
+
+> 자동로그인 해제하기
+```kotlin
+private fun isAutoLogOut() {  
+	  binding.btnRight.setOnClickListener {  
+		  CoroutineScope(Dispatchers.IO).launch {  
+			  kotlin.runCatching {  
+			  db.signInDao().deleteIsLogin("UserLogin")  
+		  }.onSuccess {  
+			  withContext(Dispatchers.Main) {  
+			  Toast.makeText(this@SettingActivity, "자동로그인 해제 되었습니다", Toast.LENGTH_SHORT)  
+			  .show()  
+			  startActivity(Intent(this@SettingActivity, SignInActivity::class.java))  
+			  finish()  
+	 }  
+		 }.onFailure {  
+			  withContext(Dispatchers.Main) {  
+			  Toast.makeText(this@SettingActivity, "자동로그인 해제 실패", Toast.LENGTH_SHORT).show()  
+			 } 
+		 }  
+		}  
+	 }  
+}
+```
+
+* DB 접근시 IO thread에서 작업하기
+* 해당 로그인 해제 버튼 클릭시 현재 id를 찾아서 제거해준다.(UserLogin으로 저장되어있을 거다)
+* runCatching을 사용하여 성공한 경우와 실패한 경우를 나눠서 해당 toast 메시지를 출력해준다.
+
+-> 하나의 아이디를 통해서만 자동로그인을 설정할 수 있도록 하였다. Room을 공부하기 위해 간단한 방식으로 진행하였고, Github 연동한 아이디마다 Room에 자동로그인 상태를 저장할 수 있는 로직의 필요성이 느껴진다.
+
+# Room 사용하여 자동로그인
+
+> 자동로그인 한 후 해당 화면 끄고 다시 화면 킨 경우
+
+<img width="200" alt="1212" src="https://user-images.githubusercontent.com/81394850/174617759-06b3bc88-f638-4dce-9e7e-f59c58778a39.png">
+
+> 자동로그인 해제 클릭
+
+<img width="200" alt="33" src="https://user-images.githubusercontent.com/81394850/174617818-0975a272-045f-4495-a372-373b2b334aa0.png">
+
+> 자동로그인 해제 한 경우 로그인 화면으로 돌아오기
+
+<img width="200" alt="444" src="https://user-images.githubusercontent.com/81394850/174617733-eec12360-6320-4f49-aa2f-0afe3293ab10.png">
