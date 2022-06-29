@@ -188,7 +188,8 @@ if (!isFinishing) {
 <details>  
 <summary>2차 세미나</summary>  
 <div markdown="1">
- # 필수 과제 1
+	
+# 필수 과제 1
 
 
 > FollowerAdapter
@@ -301,7 +302,8 @@ holder.itemView.setOnClickListener {
 <details>  
 <summary>3차 세미나</summary>  
 <div markdown="1">
- # 필수 과제 1
+	
+# 필수 과제 1
 > 폰트 적용하기
 
 1. 사용할 font xml 만들기	
@@ -637,7 +639,8 @@ private fun changeProfileImage() {
 <details>  
 <summary>4차 세미나</summary>  
 <div markdown="1">
- # 4차 세미나 과제
+	
+# 4차 세미나 과제
 
 # 필수 과제
 
