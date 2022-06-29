@@ -2,7 +2,7 @@
 무럭무럭 성장하는 Server 개발자입니다.
 
 <details> 
- <summary># 1차세미나</summary> 
+ # 1차세미나
   <div markdown="1">
    # 필수 과제 1-1
 > 로그인 페이지 만들기
