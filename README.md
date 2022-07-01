@@ -1,5 +1,5 @@
 # Server_Hyeonjeong
-무럭무럭 성장하는 Server 개발자입니다.
+### THE SOPT 30TH 세미나 
 
 <details> 
  <summary>1차 세미나</summary> 
