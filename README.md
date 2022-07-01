@@ -1,5 +1,5 @@
 # Server_Hyeonjeong
-### THE SOPT 30TH 세미나 
+### THE SOPT 30TH 세미나 과제 
 
 <details> 
  <summary>1차 세미나</summary> 
